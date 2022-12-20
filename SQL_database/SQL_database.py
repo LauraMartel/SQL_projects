@@ -1,5 +1,4 @@
 from tkinter import *
-from PIL import ImageTk, Image
 import sqlite3
 
 root = Tk()
@@ -53,7 +52,7 @@ def query():
     #Query the database
     c.execute("SELECT *, oid FROM addresses")
     records = c.fetchall()
-    
+
     # Loop through results
     print_records = ""
     for record in records:
@@ -77,14 +76,14 @@ def update():
 
     record_id = delete_box.get()
 
-    c.execute("""UPDATE addresses SET 
+    c.execute("""UPDATE addresses SET
             first_name = :first,
             last_name = :last,
             address = :address,
             city = :city,
             state = :state,
             zipcode = :zipcode
-            WHERE oid = :oid """, 
+            WHERE oid = :oid """,
 
     {"first": f_name_editor.get(),
     "last": l_name_editor.get(),
@@ -94,12 +93,12 @@ def update():
     "zipcode": zipcode_editor.get(),
     "oid": record_id
     })
-    
+
     conn.commit()
     conn.close()
     editor.destroy()
-    
-    
+
+
 
 # Create Edit function to update record
 def edit():
@@ -162,7 +161,7 @@ def edit():
     #Query the database
     c.execute("SELECT * FROM addresses WHERE oid = " + record_id)
     records = c.fetchall()
-    
+
     for record in records:
         f_name_editor.insert(0, record[0])
         l_name_editor.insert(0, record[1])
@@ -170,7 +169,7 @@ def edit():
         city_editor.insert(0, record[3])
         state_editor.insert(0, record[4])
         zipcode_editor.insert(0, record[5])
-    
+
     conn.commit()
     conn.close()
 
